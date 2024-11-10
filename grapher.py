@@ -4,6 +4,24 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
+def graph_empty(func, x, y):
+    x_lin = np.linspace( -abs(x),abs(x), 100)
+    y_lin = np.linspace( -abs(y),abs(y), 100)
+    x_lin, y_lin = np.meshgrid(x_lin, y_lin)
+    z_lin = func(x_lin, y_lin)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d', computed_zorder= False)
+
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
+    ax.plot_surface(x_lin, y_lin, z_lin, cmap='viridis')
+
+    plt.show()
+
 def graph(func, x, y):
     x_buffer = (max(x)-min(x))*0.2
     y_buffer = (max(y)-min(y))*0.2
