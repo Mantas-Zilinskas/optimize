@@ -1,14 +1,5 @@
 import math
-import locale
-from grapher import graph, graph_simplex
 from typing import Callable
-
-def f(x, y):
-    return -1/8*(x*y - x**2*y - x*y**2)
-
-def grad_f(x,y):
-    vector = (-1/8*(y-2*x*y-y**2),-1/8*(x-x**2-2*x*y))
-    return vector
 
 def gradient_descent(X0, grad_f: Callable[[float, float], tuple[float,float]], iters = 10, upsi = 1):
     
@@ -17,7 +8,7 @@ def gradient_descent(X0, grad_f: Callable[[float, float], tuple[float,float]], i
     xs.append(X0[0]) 
     ys.append(X0[1])
 
-    for i in range(iters):
+    for _ in range(iters):
 
         grad = grad_f(xs[-1],ys[-1])
 
@@ -79,7 +70,7 @@ def steepest_descent(X0, f: Callable[[float, float],float], grad_f: Callable[[fl
     xs.append(abs(X0[0])) 
     ys.append(abs(X0[1])) 
 
-    for i in range(iters):
+    for _ in range(iters):
     
         grad = grad_f(xs[-1],ys[-1])
         
@@ -171,39 +162,3 @@ def simplex(X0, f: Callable[[float, float], float], a=1, iters = 10):
     final_point = ((shape[0][0] + shape[1][0] + shape[2][0])/3,(shape[0][1] + shape[1][1] + shape[2][1])/3)
 
     return (points, final_point)
-
-
-X0 = (0,0)
-X1 = (1,1)
-X2 = (-1,-1)
-Xm = (2/10, 1/10)
-
-# shizzle = gradient_descent(Xm, grad_f, 10, 2)
-# shizzle = steepest_descent(X0, f, grad_f, 10)
-shizzle = simplex(Xm, f, 0.5, 10)
-
-final_point = shizzle[1]
-history = shizzle[0]
-
-# graph(f, history[0], history[1])    #
-graph_simplex(f, history)         #
-
-print(final_point)
-print(f(final_point[0],final_point[1]))
-print()
-
-locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
-
-print(history[0][0])
-print(history[0][1])
-print(history[0][2])
-
-# with open("result.txt","w") as file:
-#     for i in range(len(history)):
-#         shape = history[i]
-#         x = (shape[0][0] + shape[1][0] + shape[2][0])/3
-#         y = (shape[0][1] + shape[1][1] + shape[2][1])/3
-        
-#         print(f"{locale.format_string("%.15f", (f(x,y)))}")
-
-#         file.write(f"({x}; {y})\n")

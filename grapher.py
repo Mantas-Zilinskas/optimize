@@ -4,42 +4,11 @@ import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-
-
-
-# def f(x, y):
-#     return 1/8*(x*y-x**2*y-x*y**2)
-
-# # Define the grid of x and y
-# x_lin = np.linspace(0, 0.5, 100)
-# y_lin = np.linspace(0, 0.5, 100)
-# x_lin, y = np.meshgrid(x_lin, y_lin)
-
-# # Define the function z = f(x, y)
-# z = f(x_lin,y)
-
-# # Create the plot
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d', computed_zorder= False)
-
-
-# # Plot the surface
-# ax.plot_surface(x_lin, y, z, cmap='viridis')
-
-# ax.plot3D([0.5,0.4,0.3], [0.5,0.4,0.3], [f(0.5,0.5),f(0.4,0.4),f(0.3,0.3)], color='red', linewidth=2, label='Optimization Path')
-
-
-# Add labels
-# ax.set_xlabel('X')
-# ax.set_ylabel('Y')
-# ax.set_zlabel('Z')
-
-# plt.show()
-
-
 def graph(func, x, y):
-    x_lin = np.linspace(min(x) - 1, max(x) + 1, 100)
-    y_lin = np.linspace(min(y) - 1, max(y) + 1, 100)
+    x_buffer = (max(x)-min(x))*0.2
+    y_buffer = (max(y)-min(y))*0.2
+    x_lin = np.linspace(min(x) - x_buffer - 0.25, max(x) + x_buffer + 0.25, 100)
+    y_lin = np.linspace(min(y) - y_buffer - 0.25, max(y) + y_buffer + 0.25, 100)
     x_lin, y_lin = np.meshgrid(x_lin, y_lin)
     z_lin = func(x_lin, y_lin)
     z = [func(x,y) for x, y in zip(x,y)]
@@ -69,10 +38,10 @@ def graph_simplex(func, simplex:list[tuple[tuple[float, float],tuple[float, floa
             xs.append(point[0])
             ys.append(point[1])
 
-    # x_lin = np.linspace(-10,10, 100)
-    # y_lin = np.linspace(-10,10, 100)
-    x_lin = np.linspace(min(xs) - 1, max(xs) + 1, 100)
-    y_lin = np.linspace(min(ys) - 1, max(ys) + 1, 100)
+    x_buffer = (max(xs)-min(xs))*0.2
+    y_buffer = (max(ys)-min(ys))*0.2
+    x_lin = np.linspace(min(xs) - x_buffer - 0.25, max(xs) + x_buffer + 0.25, 100)
+    y_lin = np.linspace(min(ys) - y_buffer - 0.25, max(ys) + y_buffer + 0.25, 100)
     x_lin, y_lin = np.meshgrid(x_lin, y_lin)
     z_lin = func(x_lin, y_lin)
 
