@@ -1,25 +1,7 @@
 import math
+from typing import Callable
 
-##########################################################
-
-def funkcija(x, a = 2, b = 1): 
-    return ((x**2 - a)**2/b) - 1
-
-def funkcijaD(x, a = 2, b = 1): #pirmoji išvestinė
-    return 4 *x *(x**2 - a)/b
-
-def funkcijaDD(x, a = 2, b = 1): #antroji išvestinė
-    return 4*(3*x**2 - a)/b
-
-
-intervalas = (0, 10)
-e = 0.0001
-
-##########################################################
-
-
-
-def IntervaloDalijimasPusiau(fun, prad, pab, min):
+def half_elimination(fun: Callable[[float], float], start, end, min):
 
     def vidus(l, Xm, fXm, r):
         L = r - l
@@ -47,12 +29,12 @@ def IntervaloDalijimasPusiau(fun, prad, pab, min):
             return vidus(l, Xm, fXm, r)
         
   
-    Xm = (prad + pab)/2
+    Xm = (start + end)/2
     fXm = fun(Xm)
 
-    return vidus(prad, Xm, fXm, pab)
+    return vidus(start, Xm, fXm, end)
 
-def AuksinisPjuvis(fun, prad, pab, min):
+def golden_section(fun:Callable[[float], float], start, end, min):
 
     T = (math.sqrt(5) - 1)/2
 
@@ -82,12 +64,12 @@ def AuksinisPjuvis(fun, prad, pab, min):
         else:
             return vidus(l, X1, X2, r, fX1, fX2)
     
-    L = pab - prad
-    X1 = pab - T * L
-    X2 = prad + T * L
-    return vidus(prad, X1, X2, pab)     
+    L = end - start
+    X1 = end - T * L
+    X2 = start + T * L
+    return vidus(start, X1, X2, end)     
 
-def NiutonoMetodas(funD, funDD, min, X0):  
+def newton_method(funD:Callable[[float], float], funDD:Callable[[float], float], min, X0):  
     def vidus(X0):
         Xn = X0 - funD(X0)/funDD(X0)
 
@@ -97,7 +79,3 @@ def NiutonoMetodas(funD, funDD, min, X0):
             return vidus(Xn)
      
     return vidus(X0)
-
-print(IntervaloDalijimasPusiau(funkcija, intervalas[0], intervalas[1], e))
-print(AuksinisPjuvis(funkcija, intervalas[0], intervalas[1], e))
-print(NiutonoMetodas(funkcijaD, funkcijaDD, e, 5))

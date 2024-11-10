@@ -30,7 +30,7 @@ def gradient_descent(X0, grad_f: Callable[[float, float], tuple[float,float]], i
     return ((xs, ys), (xs[-1], ys[-1]))
 
 def golden_opti(f: Callable[[float, float], float], grads, xy:tuple[float,float]):
-    def Golden_section(fun, prad, pab, min):
+    def golden_section(fun, prad, pab, min):
         T = (math.sqrt(5) - 1)/2
 
         def vidus(l, X1, X2, r, fX1 = None, fX2 = None): 
@@ -67,7 +67,7 @@ def golden_opti(f: Callable[[float, float], float], grads, xy:tuple[float,float]
     def g(upsi):
         return f(xy[0] - upsi * grads[0], xy[1] - upsi * grads[1])
 
-    result = Golden_section(g,0,5,0.0001)
+    result = golden_section(g,0,5,0.0001)
     if result[0] == 0:
         return 0
     return ((result[0] + result[1])/2)
